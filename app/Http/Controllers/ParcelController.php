@@ -47,15 +47,17 @@ public function addParcel(Request $request){
 
             $files = $request->file('filename');
             $picture =$files[0]->getClientOriginalName();
-            $picture_name = $files[0]->getRealPath();;
+            $picture_name = $files[0]->getRealPath();
 
-             Cloudder::upload($picture_name, null);
+            //  Cloudder::upload($picture_name, null);
 
-             list($width, $height) = getimagesize($picture_name);
+            //  list($width, $height) = getimagesize($picture_name);
 
-             $link= Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height"=>$height]);
+            //  $link= Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height"=>$height]);
 
-            //$link = $files[0]->move(public_path("uploads"), $picture);
+            //$files[0]->move(public_path("uploads"), $picture);
+
+            $link = URL::to("/"). '/uploads/'.$picture;
 
 
             
@@ -83,14 +85,16 @@ public function addParcel(Request $request){
                    $name = $img->getClientOriginalName();
                    $image_name = $img->getRealPath();
    
-                    Cloudder::upload($image_name, null);
+                    // Cloudder::upload($image_name, null);
    
-                    list($width, $height) = getimagesize($image_name);
+                    // list($width, $height) = getimagesize($image_name);
    
-                    $image_url= Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height"=>$height]);
+                    // $image_url= Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height"=>$height]);
    
                    //save to uploads directory
-                   //$url_path = $img->move(public_path("uploads"), $name);
+                   $img->move(public_path("uploads"), $name);
+
+                   $image_url= URL::to("/"). '/uploads/'.$name;
                    
                    $image = new Image;
                    $image->parcel_id = $parcel->id;
